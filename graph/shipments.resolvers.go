@@ -5,6 +5,7 @@ package graph
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/titus-kargo/kargo-trucks/graph/model"
@@ -14,11 +15,13 @@ func (r *mutationResolver) SaveShipment(ctx context.Context, id *string, name st
 	truck := &model.Truck{}
 	for _, v := range r.Trucks {
 		if v.ID == truckID {
-			fmt.Println("save shipment")
-			fmt.Println(v)
-			fmt.Println(id)
 			truck.ID = v.ID
 			truck.PlateNo = v.PlateNo
+		}
+	}
+	for _, v := range r.Shipments {
+		if v.Truck.ID == truckID {
+			return nil, errors.New("Trucks Unavailable")
 		}
 	}
 	shipment := &model.Shipment{
