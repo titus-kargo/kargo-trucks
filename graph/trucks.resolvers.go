@@ -12,6 +12,7 @@ import (
 )
 
 func (r *mutationResolver) SaveTruck(ctx context.Context, id *string, plateNo string) (*model.Truck, error) {
+
 	truck := &model.Truck{
 		ID:      fmt.Sprintf("TRUCK-%d", len(r.Trucks)+1),
 		PlateNo: plateNo,
